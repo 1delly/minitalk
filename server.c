@@ -6,49 +6,63 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:41 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/01 14:49:28 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:30:10 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+#include <unistd.h>
+#include <signal.h>
 
-void handler(int sig)
+void ft_putnbr(int n)
 {
-    int g_char;
-    int g_bits;
-    
-    g_bits = 0;
-    g_char = 0;
-    g_char = g_char << 1;
-    if (sig == SIGUSR2)
-        g_char = g_char | 1;
-    g_bits++;
-    if (g_bits == 8)
-        write(1, &g_char, 1);
+    if (n >= 10)
+        ft_putnbr(n / 10);
+    char c = '0' + n % 10;
+    write(1, &c, 1);
 }
 
-int main()
+void handle_signal(int sig, siginfo_t *info, void *context)
+{
+    (void)info;
+    (void)context;
+    static int bits = 0;
+    static char c = 0;
+
+    if (sig == SIGUSR2)
+    {
+        c = c | (1 << bits);
+    }
+    bits = bits + 1;
+    if (bits == 8)
+    {
+        write(1, &c, 1);
+        bits = 0;
+        c = 0;
+    }
+}
+
+int main(void)
 {
     struct sigaction sa;
 
-    sa.sa_handler = &handler;
-    sigemptyset(&sa.sa_mask);
+    sa.sa_sigaction = handle_signal;
     sa.sa_flags = SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
 
-    if (sigaction(SIGUSR1, &sa, NULL) == -1 ||
-        sigaction(SIGUSR2, &sa, NULL) == -1) {
-        write(2, "Error\n", 6);
-        exit(1);
+    if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
+    {
+        write(2, "An error occurred\n", 18);
+        return (1);
     }
-
     write(1, "PID: ", 5);
     ft_putnbr(getpid());
     write(1, "\n", 1);
-
-    while (1) {
+    while (1)
         pause();
-    }
-    return 0;
+    return (0);
 }
+
+
 

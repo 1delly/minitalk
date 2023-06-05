@@ -6,54 +6,54 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:54 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/01 14:56:18 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:24:53 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void send_char(int server_pid, char c)
+#include <unistd.h>
+#include <stdlib.h>
+
+void send_bit(int pid, int bit)
 {
-    int i = 7;
-    while (i >= 0)
+    int signal;
+    
+    if (bit == 0)
+        signal = SIGUSR1;
+    else
+        signal = SIGUSR2;
+    if (kill(pid, signal) == -1)
     {
-        int bit = (c >> i) & 1;
-        if (bit == 0)
-        {
-            if (kill(server_pid, SIGUSR1) == -1) 
-            {
-                write(2, "Error\n", 6);
-                exit(1);
-            }
-        } 
-        else 
-        {
-            if (kill(server_pid, SIGUSR2) == -1) 
-            {
-                write(2, "Error\n", 6);
-                exit(1);
-            }
-        }
-        usleep(500);
-        i--;
+        write(2, "An error occurred\n", 18);
+        exit(1);
+    }
+    usleep(100);
+}
+
+void send_char(int pid, char c)
+{
+    int bit = 0;
+    while (bit < 8)
+    {
+        send_bit(pid, c & (1 << bit));
+        bit++;
     }
 }
 
 int main(int argc, char *argv[])
 {
-    int server_pid = atoi(argv[1]);
+    if (argc != 3)
+    {
+        write(2, "Usage: ./client [PID] [message]\n", 31);
+        return (1);
+    }
+    int pid = atoi(argv[1]);
     char *str = argv[2];
-    size_t i = 0;
-    
-    if (argc != 3) 
+    while (*str)
     {
-        write(2, "Usage: ./client [server_pid] [string]\n", 39);
-        return 1;
+        send_char(pid, *str);
+        str++;
     }
-    while (i < ft_strlen(str)) 
-    {
-        send_char(server_pid, str[i]);
-        i++;
-    }
-    return 0;
+    return (0);
 }
