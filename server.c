@@ -6,7 +6,7 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:41 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/06 17:06:43 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:15:52 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void handle_signal(int sig, siginfo_t *info, void *context)
     }
 }
 
-
-
 int main(void)
 {
     struct sigaction    sa;
@@ -61,6 +59,3 @@ int main(void)
         pause();
     return (0);
 }
-
-
-

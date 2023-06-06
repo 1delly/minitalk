@@ -6,24 +6,11 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:54 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/06 17:01:53 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:18:51 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-void send_bit(int pid, int bit)
-{
-    int signal;
-    
-    if (bit == 0)
-        signal = SIGUSR1;
-    else
-        signal = SIGUSR2;
-    if (kill(pid, signal) == -1)
-        write(2, "An error occurred\n", 18);
-    usleep(1000);
-}
 
 void send_char(int pid, char c)
 {
@@ -39,11 +26,10 @@ void send_char(int pid, char c)
             signal = SIGUSR2;
         if (kill(pid, signal) == -1)
             write(2, "An error occurred\n", 18);
-        usleep(500);
+        usleep(1000);
         bit--;
     }
 }
-
 
 int main(int argc, char *argv[])
 {
