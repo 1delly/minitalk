@@ -6,7 +6,7 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:41 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/06 17:15:52 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:46:50 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,26 @@ void handle_signal(int sig, siginfo_t *info, void *context)
     (void)info;
     (void)context;
 
-    if (sig == SIGUSR2)
-        g_c = g_c | (1 << (7 - g_bits));
-    g_bits = g_bits + 1;
     if (g_bits == 8)
     {
-        write(1, &g_c, 1);
-        g_bits = 0;
-        g_c = 0;
+        if (sig == SIGUSR2)  // Extra bit 1, start of a new character
+        {
+            g_bits = 0;
+            g_c = 0;
+        }
+        else
+            write(2, "An error occurred\n", 18);
+    }
+    else
+    {
+        if (sig == SIGUSR2)
+            g_c = g_c | (1 << (7 - g_bits));
+        g_bits = g_bits + 1;
+        if (g_bits == 8)
+            write(1, &g_c, 1);
     }
 }
+
 
 int main(void)
 {

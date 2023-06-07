@@ -6,7 +6,7 @@
 #    By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 13:51:26 by tdelgran          #+#    #+#              #
-#    Updated: 2023/06/06 17:18:03 by tdelgran         ###   ########.fr        #
+#    Updated: 2023/06/07 11:13:05 by tdelgran         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ client: client.o ft_strlen.o
 	$(CC) -c $(CFLAGS) $?
 	
 fclean: clean
-	rm -f server client
+	rm -f server client *.o
 
 re: fclean all
 

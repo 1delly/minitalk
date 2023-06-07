@@ -6,7 +6,7 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:54 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/06 17:18:51 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:46:19 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ void send_char(int pid, char c)
         usleep(1000);
         bit--;
     }
+    // Send extra bit 1
+    if (kill(pid, SIGUSR2) == -1)
+        write(2, "An error occurred\n", 18);
+    usleep(1000);
 }
+
 
 int main(int argc, char *argv[])
 {

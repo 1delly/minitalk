@@ -6,11 +6,11 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 10:50:56 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/05 15:27:06 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:26:07 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "minitalk.h"
 
 // void	ft_putchar(char c)
 // {
