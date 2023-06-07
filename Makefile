@@ -6,12 +6,12 @@
 #    By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 13:51:26 by tdelgran          #+#    #+#              #
-#    Updated: 2023/06/07 11:13:05 by tdelgran         ###   ########.fr        #
+#    Updated: 2023/06/07 12:45:02 by tdelgran         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minitalk
-SOURCES = server.c client.c ft_strlen.c ft_putnbr.c
+SOURCES = server.c client.c utils.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
@@ -19,10 +19,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 all: server client
 
-server: server.o ft_putnbr.o ft_strlen.o
+server: server.o utils.o
 	$(CC) -o $@ $^
 	
-client: client.o ft_strlen.o
+client: client.o utils.o
 	$(CC) -o $@ $^
 
 
@@ -30,7 +30,7 @@ client: client.o ft_strlen.o
 	$(CC) -c $(CFLAGS) $?
 	
 fclean: clean
-	rm -f server client *.o
+	rm -f server client *.o *.a
 
 re: fclean all
 
