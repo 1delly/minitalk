@@ -6,25 +6,26 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:45:41 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/07 12:50:01 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:32:30 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int		g_bits = 0;
-char	g_c = 0;
 
 void	handle_signal(int sig, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
-	if (g_bits == 8)
+	static int	bits = 0;
+	static char	c = 0;
+	
+	if (bits >= 8)
 	{
 		if (sig == SIGUSR2)
 		{
-			g_bits = 0;
-			g_c = 0;
+			bits = 0;
+			c = 0;
 		}
 		else
 			write(2, "Error\n", 6);
@@ -32,10 +33,10 @@ void	handle_signal(int sig, siginfo_t *info, void *context)
 	else
 	{
 		if (sig == SIGUSR2)
-			g_c = g_c | (1 << (7 - g_bits));
-		g_bits = g_bits + 1;
-		if (g_bits == 8)
-			write(1, &g_c, 1);
+			c = c | (1 << (7 - bits));
+		if (bits == 7)
+			write(1, &c, 1);
+		bits = bits + 1;
 	}
 }
 

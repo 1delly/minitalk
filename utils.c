@@ -6,7 +6,7 @@
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:06:39 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/07 12:53:19 by tdelgran         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:54:17 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,9 @@ void	ft_putchar(char c)
 void	ft_putnbr(int nb)
 {
 	if (nb == -2147483648)
-	{
 		write(1, "-2147483648", 11);
-	}
 	else if (nb >= 0 && nb <= 9)
-	{
 		ft_putchar(nb + '0');
-	}
 	else if (nb < 0)
 	{
 		ft_putchar('-');
@@ -72,3 +68,11 @@ void	ft_putnbr(int nb)
 	}
 }
 
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+	return (0);
+}
