@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 17:45:54 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/12 11:26:36 by tdelgran         ###   ########.fr       */
+/*   Created: 2023/06/12 11:25:37 by tdelgran          #+#    #+#             */
+/*   Updated: 2023/06/13 11:47:20 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 int	pid_ok(const char *str)
 {
@@ -62,5 +62,9 @@ int	main(int argc, char *argv[])
 		send_char(pid, *str);
 		str++;
 	}
+	if (pid == -1)
+		write(1, "Message not recieved\n", 22);
+	else
+		write(1, "Message recieved\n", 18);
 	return (0);
 }

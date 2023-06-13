@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdelgran <tdelgran@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 17:45:41 by tdelgran          #+#    #+#             */
-/*   Updated: 2023/06/12 11:20:10 by tdelgran         ###   ########.fr       */
+/*   Created: 2023/06/12 11:27:11 by tdelgran          #+#    #+#             */
+/*   Updated: 2023/06/12 11:30:25 by tdelgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	handle_signal(int sig, siginfo_t *info, void *context)
 {
